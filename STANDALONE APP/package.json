@@ -1,0 +1,13 @@
+{
+  "name": "xioauctions",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "names": "node xioauctions_names.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@rgrove/parse-xml": "^3.0.0"
+  }
+}

@@ -1,0 +1,9 @@
+## Interface: 90002
+## Title: XioAuctions
+## Notes: Auction helper
+## Author: Xiodine
+## Version: 1.0.0
+## Dependency: TradeSkillMaster
+
+XioAuctions.lua
+XioAuctions.xml
