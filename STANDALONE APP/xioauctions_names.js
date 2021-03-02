@@ -101,6 +101,10 @@ async function main() {
     toReplace = /^(\s*<script id="XioAuctions_Addon" type="text\/plain">[^<]+?<\/script>)/m.exec(data)[1];
     data = data.replace(toReplace, '<script id="XioAuctions_Addon" type="text/plain">' + str.trim() + '</script>');
     fs.writeFileSync('./xioauctions.html', data);
+
+    const start = (process.platform === 'darwin'? 'open': process.platform === 'win32'? 'start': 'xdg-open');
+    require('child_process').exec(start + ' ' + './xioauctions.html');
+
     return 'done!';
 }
 
