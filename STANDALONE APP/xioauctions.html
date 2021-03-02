@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>XioAuctions</title>
     <style>
         *, *::before, *::after {
@@ -15,6 +15,20 @@
             padding: 0;
             border: 0;
             font: 16px/1.6 'Helvetica';
+        }
+
+        html, body, textarea {
+            color: #333;
+            background-color: #fafafa;
+        }
+
+        a {
+            color: inherit;
+            transition: color 133ms;
+        }
+
+        a:hover {
+            color: #808080;
         }
 
         #container {
@@ -51,11 +65,37 @@
             margin-bottom: 0.875em;
         }
 
-        p {
+        table {
+            margin-top: 1em;
+        }
+
+        p, table {
             font-size: 1.00em;
             line-height: 1.63em;
             padding-top: 0.500em;
             margin-bottom: 1.13em;
+        }
+
+        .gold {
+            color: #d6c150;
+            font-weight: bold;
+        }
+
+        .silver {
+            color: #b8b8b8;
+            font-weight: bold;
+        }
+
+        .copper {
+            color: #9d5d38;
+            font-weight: bold;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body, html, textarea {
+                color: #ccc;
+                background-color: #111;
+            }
         }
     </style>
 </head>
@@ -63,24 +103,107 @@
 <div id="container">
     <h1>XioAuctions</h1>
     <label for="addon_input">
-        <textarea id="addon_input" rows="10" style="resize: none;width: 100%"></textarea>
+        <textarea id="addon_input" placeholder="Enter text here from addon" rows="10" style="resize: none;width: 100%"></textarea>
     </label>
-    <pre id="items"></pre>
+    <pre id="log" title="Logs"></pre>
+
+    <div style="float: right"></div>
+    <h2>A quick buck</h2>
+    <h3>At most a stack in one basket</h3>
+    <div id="quick_buck_diversify"></div>
+    <h3>All eggs in one basket</h3>
+    <div id="quick_buck"></div>
+    <h2><a href="#" id="custom_investment">Custom investment</a></h2>
+    <h3>At most a stack in one basket</h3>
+    <div id="custom_results_diversify"></div>
+    <h3>All eggs in one basket</h3>
+    <div id="custom_results"></div>
 </div>
 </body>
-<script>
+<script id="XioAuctions_Import" type="application/json">{"items":{"168583":"Widowbloom","168586":"Rising Glory","168589":"Marrowroot","169701":"Death Blossom","170554":"Vigil's Torch","171267":"Spiritual Healing Potion","171268":"Spiritual Mana Potion","171269":"Spiritual Rejuvenation Potion","171270":"Potion of Spectral Agility","171271":"Potion of Hardened Shadows","171272":"Potion of Spiritual Clarity","171273":"Potion of Spectral Intellect","171274":"Potion of Spectral Stamina","171275":"Potion of Spectral Strength","171276":"Spectral Flask of Power","171278":"Spectral Flask of Stamina","171315":"Nightshade","171349":"Potion of Phantom Fire","171350":"Potion of Divine Awakening","171351":"Potion of Deathly Fixation","171352":"Potion of Empowered Exorcisms","176811":"Potion of Sacrificial Anima","180732":"Rune Etched Vial"},"recipes":{"171267":{"169701":2,"180732":1},"171268":{"169701":2,"180732":1},"171269":{"171267":1,"171268":1},"171270":{"168583":5,"180732":1},"171271":{"168586":3,"170554":3,"180732":1},"171272":{"170554":5,"180732":1},"171273":{"168589":5,"180732":1},"171274":{"170554":5,"180732":1},"171275":{"168586":5,"180732":1},"171276":{"168583":4,"168586":4,"168589":4,"170554":4,"171315":3,"180732":1},"171278":{"168586":3,"168589":3,"171315":1,"180732":1},"171349":{"168586":3,"168589":3,"180732":1},"171350":{"168586":3,"170554":3,"180732":1},"171351":{"168583":3,"170554":3,"180732":1},"171352":{"168583":3,"168589":3,"180732":1},"176811":{"168583":6,"180732":1}},"vendors":{"172056":5000,"172057":3750,"172058":4500,"172059":4250,"178786":3500,"180732":500},"sell_prices":{"168583":5,"168586":1,"168589":5,"169701":5,"170554":5,"171267":2500,"171268":2500,"171269":2500,"171270":2500,"171271":2500,"171272":2500,"171273":2500,"171274":2500,"171275":2500,"171276":2500,"171278":2500,"171315":5,"171349":2500,"171350":2500,"171351":2500,"171352":2500,"176811":2500},"stack_sizes":{"168583":200,"168586":200,"168589":200,"169701":200,"170554":200,"171267":20,"171268":20,"171269":20,"171270":20,"171271":20,"171272":20,"171273":20,"171274":20,"171275":20,"171276":20,"171278":20,"171315":200,"171349":20,"171350":20,"171351":20,"171352":20,"176811":20}}</script>
+<script id="XioAuctions_Addon" type="text/plain">171274,93&1190000|2&1199400|58&1199500|8&1199900|13&1200000|22&1258800|4&4000000000|
+168589,8130&233500|12&233600|8&233700|29&233800|2444&234000|1255&234400|4&239000|13223&239500|200&239600|418&239700|7920&239800|14&239900|1540&240000|4&242500|8&242600|101&249700|119&250000|258&251400|1&254900|6&255000|3017&256300|16&256400|141&256600|14&257600|18&257700|34&257800|30&257900|8&258000|925&258700|22450&259900|4006&278000|2401&303800|34754&317900|2000&323500|8067&420000|4592&558800|202&664200|4&2600000000|1&5000008400|
+171267,3057&89900|2588&100000|768&103900|11474&113900|548&115000|41&122000|1509&139900|1456&179900|2871&200000|100&299900|4&3900000000|1&3900003900|
+171275,1508&1500000|1353&1530000|369&1550000|305&1690000|270&1990000|100&390000000|5&4150000000|
+171315,1073&299300|13&299400|21&299500|1838&300000|2002&308900|547&309100|682&309200|821&309400|1327&309500|6&309600|469&309800|46&309900|2144&310000|6233&316500|1001&316600|46&316700|27&316800|1520&316900|208&317000|17701&318000|98&318100|664&318200|97&318300|369&318500|226&318600|164&318900|611&319000|66&319200|208&319400|2&319500|104&320000|368&329000|207&329500|200&329700|200&329800|200&329900|200&330000|200&333800|200&333900|200&338500|202&341600|5945&350000|124&351200|76&351400|245&351800|354&352700|475&354200|98&354500|102&355500|207&356700|456&361200|275&365500|245&366200|236&367200|108&369800|320&379500|245&379900|145&380100|452&380500|278&381500|233&382200|456&384700|5886&389800|400&399800|6000&399900|401&401300|3380&439300|10145&440000|200&450000|3373&460000|4200&470000|8521&480000|4202&599900|4882&879800|9923&879900|18621&1499000|4&3600000000|
+171268,2727&110000|323&114000|100&121800|1545&154000|2&4900009900|4&5100000000|
+171276,2675&5998800|25&6008800|532&6088800|12&6088900|17&6139000|20&6210000|700&6580000|76&6599500|1094&6699900|480&6700000|55&6988600|50&6988700|182&6988800|140&6998900|20&7499800|100&7946500|818&7998800|1&19500000|40&400000000|2&4250000000|
+171269,1&153700|52&153800|8&153900|29&154900|9&164900|25&165000|36&168500|4&169000|1&179000|1&179800|92&190800|100&490000000|8&4300000000|
+171270,2079&2148000|860&2148700|76&2148800|183&2191700|40&2291700|6327&2391700|1190&2541800|202&2542000|551&2542100|716&2552200|194&2572900|100&2888100|231&3588100|20&99000000|60&490000000|5&1490000000|
+171278,360&2088800|100&2103800|111&2480800|33&490000000|4&3000000000|
+171349,4551&1725900|980&1726000|1288&1726500|1564&1736500|252&1739100|471&1739900|20&1740000|83&1891800|138&1978000|2910&1990900|500&1991400|900&1991600|320&2000400|1&2500000000|4&3500000000|
+170554,16274&248500|826&248900|3603&249000|1459&249500|2295&249600|95&249700|255&249900|1369&250000|2&254000|117&254100|101&254200|4575&254300|69&254400|8211&254500|116&255000|4287&275000|9494&280000|6591&299900|5&307400|7986&310000|228&310700|10000&312900|14633&329200|3&368000|10000&399900|4&2900000000|
+171271,67&59800|10&86700|459&97400|4&4350000000|
+171350,61&1570000|10&1590000|28&1600000|1&1607600|11&1651800|95&1672400|5&1757400|4&3700000000|
+168586,7648&260000|17074&260700|3886&260900|2206&266000|1409&266300|1118&266400|6806&270000|3&279500|4136&300900|3144&315000|1000&320000|12206&352600|8952&390000|772&420000|8709&446300|2800&459300|6&477700|4&2000000000|1&5000000000|
+171272,566&1904900|92&1905000|1232&2105000|4&2205000|4&2206000|93&2206200|192&2206300|2&2236300|2&7433100|4&4300000000|
+169701,725&35800|301&35900|8132&36000|173&36200|115&36400|10&36600|2&38000|48&38200|91&38300|3001&38600|2300&38700|8560&38900|17914&39200|2400&39400|14693&39500|11099&39600|11220&39700|35548&39800|31900&40000|25717&47900|61000&48800|3&60000|493&70000|63871&89900|23846&99900|25&130000|48053&196800|1&305700|4&19740500|4&3600000000|
+171351,352&2479000|67&2479300|21&2489300|5&2489400|146&6250000|4&4300000000|
+176811,60&2374900|47&2379900|23&2380000|6&2390000|40&2400000|11&2404900|4&2600000000|
+171273,2131&1278800|8291&1338800|228&1396900|2910&1399900|97&1438100|40&1464800|192&1474800|745&1488800|1567&1503000|3&1892700|1149&1892800|665&1992800|100&400000000|5&4250000000|
+171352,12&1980000|45&1990000|51&2399900|324&2400000|155&2479900|56&2480000|206&2488900|6&2508900|16&2509000|86&2992800|14&2999000|396&2999100|8&2999300|4&4350000000|
+168583,2281&396800|1026&396900|30679&397000|1707&399700|20224&399800|17793&399900|12379&400000|103&404400|17&404500|44&404600|2933&404700|68&404800|4224&404900|11153&405000|116644&409700|36296&409800|11&410000|33&419600|28990&419800|20&419900|17&420000|160&430000|2&439900|31549&448600|219&468900|14254&500000|89879&698000|15&866300|4&4000000000|1&5000000000|</script>
+<script defer>
     // noinspection SpellCheckingInspection
-    (function() {
-        const v = JSON.parse('{"168583":"Widowbloom","168586":"Rising Glory","168589":"Marrowroot","169701":"Death Blossom","170554":"Vigil\'s Torch","171263":"Potion of Soul Purity","171264":"Potion of Shaded Sight","171266":"Potion of the Hidden Spirit","171267":"Spiritual Healing Potion","171268":"Spiritual Mana Potion","171269":"Spiritual Rejuvenation Potion","171270":"Potion of Spectral Agility","171271":"Potion of Hardened Shadows","171272":"Potion of Spiritual Clarity","171273":"Potion of Spectral Intellect","171274":"Potion of Spectral Stamina","171275":"Potion of Spectral Strength","171276":"Spectral Flask of Power","171278":"Spectral Flask of Stamina","171285":"Shadowcore Oil","171286":"Embalmer\'s Oil","171287":"Ground Death Blossom","171288":"Ground Vigil\'s Torch","171289":"Ground Widowbloom","171290":"Ground Marrowroot","171291":"Ground Rising Glory","171292":"Ground Nightshade","171301":"Spiritual Anti-Venom","171315":"Nightshade","171349":"Potion of Phantom Fire","171350":"Potion of Divine Awakening","171351":"Potion of Deathly Fixation","171352":"Potion of Empowered Exorcisms","171370":"Potion of Specter Swiftness","171428":"Shadowghast Ingot","172040":"Butterscotch Marinated Ribs","172041":"Spinefin Souffle and Fries","172042":"Surprisingly Palatable Feast","172044":"Cinnamon Bonefish Stew","172045":"Tenebrous Crown Roast Aspic","172046":"Biscuits and Caviar","172047":"Candied Amberjack Cakes","172048":"Meaty Apple Dumplings","172049":"Iridescent Ravioli with Apple Sauce","172050":"Sweet Silvergill Sausages","172051":"Steak a la Mode","172052":"Aethereal Meat","172053":"Tenebrous Ribs","172054":"Raw Seraphic Wing","172055":"Phantasmal Haunch","172061":"Seraph Tenders","172062":"Smothered Shank","172063":"Fried Bonefish","172068":"Pickled Meat Smoothie","172069":"Banana Beef Pudding","173032":"Lost Sole","173033":"Iridescent Amberjack","173034":"Silvergill Pike","173035":"Pocked Bonefish","173036":"Spinefin Piranha","173037":"Elysian Thade","176811":"Potion of Sacrificial Anima","179314":"Creeping Crawler Meat","179315":"Shadowy Shank","180457":"Shadestone","183823":"Potion of Unhindered Passing","184090":"Potion of the Psychopomp\'s Speed"}');
+    (function () {
+        /* !@#!@# DO NOT MODIFY THIS LINE !@#!@# */
+        const v = JSON.parse(document.querySelector('#XioAuctions_Import').innerHTML);
+        window.XioAuctions_ToRun = document.querySelector('#XioAuctions_Addon').innerHTML;
+
         window.XioAuctions_Names = new Map();
-        for (const itemId of Object.keys(v)) {
-            window.XioAuctions_Names.set(+itemId, v[itemId]);
+        for (const itemId of Object.keys(v.items)) {
+            window.XioAuctions_Names.set(+itemId, v.items[itemId]);
         }
+
+        window.XioAuctions_Ingredients = new Map();
+        for (const itemId of Object.keys(v.recipes)) {
+            const map = new Map();
+            for (const ingredientId of Object.keys(v.recipes[itemId])) {
+                map.set(+ingredientId, v.recipes[itemId][ingredientId]);
+            }
+            window.XioAuctions_Ingredients.set(+itemId, map);
+        }
+
+        window.XioAuctions_Vendors = new Map();
+        for (const itemId of Object.keys(v.vendors)) {
+            window.XioAuctions_Vendors.set(+itemId, v.vendors[itemId]);
+        }
+
+        window.XioAuctions_SellPrices = new Map();
+        for (const itemId of Object.keys(v.sell_prices)) {
+            window.XioAuctions_SellPrices.set(+itemId, v.sell_prices[itemId]);
+        }
+
+        window.XioAuctions_StackSizes = new Map();
+        for (const itemId of Object.keys(v.stack_sizes)) {
+            window.XioAuctions_StackSizes.set(+itemId, v.stack_sizes[itemId]);
+        }
+
+        // Shadestone
+        window.XioAuctions_Dailies = [180457];
     })();
 </script>
-<script>
+<script defer>
     (function () {
+        function logStart() {
+            document.getElementById('log').innerText = '';
+        }
+
+        function log(...texts) {
+            document.getElementById('log').innerText +=
+                (texts?.map(text => typeof text === 'string' ? text : JSON.stringify(text, null, 1)) || []).join(' ') + '\n';
+        }
+
+        function valToGold(val) {
+            const copper = val % 100;
+            const silver = Math.floor(val / 100) % 100;
+            const gold = Math.floor(val / 10000);
+            return `${gold}<span class="gold">g</span> ${silver}<span class="silver">s</span> ${copper}<span class="copper">c</span>`;
+        }
+
         function calculate(valueInput) {
+            logStart();
+
             function transform(valueInput) {
                 function parse(line) {
                     let [itemId, lines] = line.split(",")
@@ -101,24 +224,200 @@
                 return lines;
             }
 
-            const lines = transform(valueInput);
-            document.getElementById("items").innerText = "[";
-            for (const itemId of lines.keys()) {
-                document.getElementById("items").innerText += itemId + ",\n";
+            /**
+             *
+             * @param names_map {Map}
+             * @param ingredients_map {Map}
+             * @param vendors_map {Map}
+             * @param sell_map {Map}
+             * @param input_data {Map}
+             * @param blacklist {number[]}
+             */
+            function find_max_profit(names_map, ingredients_map, vendors_map, sell_map, input_data, blacklist) {
+                const items = [];
+                for (const [ingredient_id, ingredients] of ingredients_map.entries()) {
+                    if (window.XioAuctions_Dailies.includes(ingredient_id) || blacklist.includes(ingredient_id)) {
+                        continue;
+                    }
+                    let cost = 0;
+                    const crafting_source = [];
+                    forLoop: for (const [regent_id, regent_quantity] of ingredients.entries()) {
+                        if (vendors_map.has(regent_id)) {
+                            const crafting_cost = vendors_map.get(regent_id) * regent_quantity;
+                            cost += crafting_cost;
+                            crafting_source.push({
+                                id: regent_id,
+                                name: names_map.get(regent_id),
+                                cost: vendors_map.get(regent_id),
+                                quantity: regent_quantity,
+                                total: crafting_cost,
+                                source: 'Vendor'
+                            });
+                        } else if (input_data.has(regent_id)) {
+                            const entries = [...input_data.get(regent_id)];
+                            let quantityToCalc = regent_quantity;
+                            while (quantityToCalc > 0) {
+                                const entry = entries.shift();
+                                if (entry === undefined) {
+                                    log('Not enough in AH for', regent_id);
+                                    break forLoop;
+                                }
+                                const removing = Math.min(quantityToCalc, entry.q);
+                                quantityToCalc -= removing;
+                                cost += entry.c * removing;
+                                crafting_source.push({
+                                    id: regent_id,
+                                    name: names_map.get(regent_id),
+                                    cost: entry.c,
+                                    quantity: removing,
+                                    total: entry.c * removing,
+                                    source: 'AH'
+                                })
+                            }
+                        } else {
+                            log('Data not found for', regent_id);
+                            break;
+                        }
+                    }
+                    const data = {
+                        id: ingredient_id,
+                        name: names_map.get(ingredient_id),
+                        cost: cost + sell_map.get(ingredient_id),
+                        crafting_source,
+                        sell: input_data.get(ingredient_id)?.[0].c
+                    };
+                    data.profit = data.sell * 0.95 - cost;
+                    items.push(data);
+                }
+                items.sort((a, b) => b.profit - a.profit);
+                return items;
             }
-            document.getElementById("items").innerText += "]";
-            console.log(lines);
+
+            function estimate(old_input_data, gold, diversify) {
+                function run_once(old_input_data, blacklist) {
+                    // duplicate all code
+                    const input_data = new Map();
+                    for (const [key, value] of old_input_data.entries()) {
+                        input_data.set(key, JSON.parse(JSON.stringify(value)));
+                    }
+                    const results = find_max_profit(XioAuctions_Names, XioAuctions_Ingredients, XioAuctions_Vendors, XioAuctions_SellPrices, input_data, blacklist);
+                    const remover = results[0];
+                    for (let {id, quantity} of remover.crafting_source) {
+                        if (!input_data.has(id)) {
+                            continue;
+                        }
+                        const arr = input_data.get(id);
+                        while (arr[0].q <= quantity && quantity > 0) {
+                            quantity -= arr[0].q;
+                            arr.shift();
+                        }
+                        arr[0].q -= quantity;
+                    }
+                    return {remover, input_data};
+                }
+
+                function create_groups(to_craft) {
+                    const g = {};
+                    for (const craft of to_craft) {
+                        const k = JSON.stringify(craft);
+                        if (g[k] === undefined) {
+                            g[k] = 0;
+                        }
+                        g[k]++;
+                    }
+                    const result = [];
+                    for (const [json, count] of Object.entries(g)) {
+                        const ob = JSON.parse(json);
+                        ob.quantity = count;
+                        result.push(ob);
+                    }
+                    return result;
+                }
+
+                const to_craft = [];
+                let id = old_input_data;
+                while (gold > 0) {
+                    const blacklist =
+                        diversify
+                            ? create_groups(to_craft).map(x => ({
+                                id: x.id,
+                                q: x.quantity,
+                                ss: XioAuctions_StackSizes.get(x.id)
+                            })).filter(x => x.q >= x.ss).map(x => x.id)
+                            : XioAuctions_Dailies;
+                    const result = run_once(id, blacklist);
+                    id = result.input_data;
+                    to_craft.push(result.remover);
+                    gold -= result.remover.cost;
+                }
+                to_craft.splice(to_craft.length - 1, 1);
+                // group duplicates
+
+                return create_groups(to_craft);
+            }
+
+            const lines = transform(valueInput);
+
+            function run_for(gold_amount, diversify) {
+                let table = '';
+                let resultingFunds = gold_amount;
+                for (const estimation of estimate(lines, gold_amount, diversify)) {
+                    table += `<tr><td>${estimation.name}</td><td>${valToGold(estimation.cost)}</td><td>${valToGold(estimation.sell)}</td><td>${valToGold(estimation.profit)}</td><td>${estimation.quantity}</td></tr>`;
+                    resultingFunds += estimation.profit * estimation.quantity;
+                }
+                return `<p>(${valToGold(gold_amount)} - 12h)  => ${valToGold(resultingFunds)} (${valToGold(resultingFunds - gold_amount)} total profit)</p>
+    <table style="width: 100%;table-layout: fixed;text-align: center">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Crafting cost</th>
+            <th>Min buyout</th>
+            <th>Profit</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>${table}</tbody>
+    </table>`;
+            }
+
+            document.querySelector('#quick_buck').innerHTML = '';
+            document.querySelector('#quick_buck').innerHTML = run_for(10000000, false);
+            document.querySelector('#quick_buck_diversify').innerHTML = '';
+            document.querySelector('#quick_buck_diversify').innerHTML = run_for(10000000, true);
+
+            return {
+                run_for: (gold, diversify) => run_for(gold, diversify)
+            };
         }
 
         const addonInput = document.getElementById("addon_input");
-        addonInput.addEventListener("input", function () {
-            calculate(this.value);
+        const addonInputOnInput = function () {
+            window.XioAuctions = calculate(this.value);
             addonInput.hidden = true;
-        });
+        }
+        addonInput.addEventListener("input", addonInputOnInput);
         addonInput.addEventListener("focus", function () {
             addonInput.select();
         })
+        document.querySelector('#custom_investment').addEventListener('click', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            if (window.XioAuctions) {
+                let gold = prompt('Gold?');
+                if (gold === null) {
+                    return;
+                }
+                document.querySelector('#custom_results').innerHTML = '';
+                document.querySelector('#custom_results').innerHTML = window.XioAuctions.run_for(parseInt(gold, 10) * 10000, false);
+                document.querySelector('#custom_results_diversify').innerHTML = '';
+                document.querySelector('#custom_results_diversify').innerHTML = window.XioAuctions.run_for(parseInt(gold, 10) * 10000, true);
+            }
+        })
         addonInput.focus();
+        if (window.XioAuctions_ToRun) {
+            addonInput.value = window.XioAuctions_ToRun;
+            addonInputOnInput.call(addonInput);
+        }
     })();
 </script>
 </html>

@@ -60,12 +60,12 @@ function XioAuctions_Run()
 	end
 	local x = ''
 	for k,v in pairs(private.items) do
-		x = x .. k .. "," .. v .. "~"
+		x = x .. k .. "," .. v .. "\n"
 	end
 	x = strsub(x, 1, strlen(x) - 1)
   	XioAuctionsEditBox:SetText(x)
   	XioAuctionsEditBox:HighlightText()
-  	XioAuctionsFrame:Show()	
+  	XioAuctionsFrame:Show()
 end
 
 function XioAuctions_OnEvent(self, event, ...)
@@ -78,14 +78,14 @@ function XioAuctions_OnEvent(self, event, ...)
 		private.items[itemId] = ""
 		for i = 1, C_AuctionHouse.GetNumCommoditySearchResults(itemId) do
 		 	local result = C_AuctionHouse.GetCommoditySearchResultInfo(itemId, i)
-		 	
+
 		 	private.items[itemId] = private.items[itemId] .. result.quantity .. "&" .. result.unitPrice .. "|"
     	end
 		_, sName = GetItemInfo(itemId)
 		print('XioAuctions - handled', sName)
 	else
 		print('Xioauctions - event', event, ...)
-	end	
+	end
 end
 
 function XioAuctions_OnUpdate(self, elapsed)
