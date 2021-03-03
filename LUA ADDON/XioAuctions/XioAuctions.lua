@@ -1,6 +1,14 @@
+-- ADD AddOns/TradeSkillMaster/Core/Service/AuctionDB/Core.lua - LINE 42 (before MODULE FUNCTIONS): TSMAUCTIONDB = private.realmAppData
 local _, xa = ...
-local private = { items = {} }
+local private = { items = {}, latest = {} }
 local XioAuctionsFrame = nil
+function XioAuctions_Gold(value)
+	if value < 0 then
+		return '-' .. GetCoinTextureString(-value)
+	else
+		return GetCoinTextureString(value)
+	end
+end
 
 function XioAuctions_OnLoad(self)
 	print("XioAuctions_OnLoad")
@@ -13,6 +21,10 @@ end
 
 function XioAuctions_Show()
 	if not private.hasShown then
+		local function GetXioAuctionsPrice(itemLink)
+			local itemId = GetItemInfoInstant(itemLink)
+			return private.latest and private.latest[itemId] or nil
+		end
 		private.hasShown = true
 		local tabId = AuctionHouseFrame.numTabs + 1
 		local tab = CreateFrame("Button", "AuctionFrameTab"..tabId, AuctionHouseFrame, "AuctionHouseFrameTabTemplate")
@@ -72,24 +84,36 @@ function XioAuctions_OnEvent(self, event, ...)
 	if event == "AUCTION_HOUSE_SHOW" then
 		XioAuctions_Show()
 	elseif event == "AUCTION_HOUSE_CLOSED" then
-		wipe(private.items)
+		--wipe(private.items)
 	elseif event == "COMMODITY_SEARCH_RESULTS_UPDATED" then
 		local itemId = ...
 		private.items[itemId] = ""
 		for i = 1, C_AuctionHouse.GetNumCommoditySearchResults(itemId) do
 		 	local result = C_AuctionHouse.GetCommoditySearchResultInfo(itemId, i)
-
+		 	if private.items[itemId] == "" then
+		 		private.latest[itemId] = result.unitPrice
+		 	end
 		 	private.items[itemId] = private.items[itemId] .. result.quantity .. "&" .. result.unitPrice .. "|"
     	end
 		_, sName = GetItemInfo(itemId)
-		print('XioAuctions - handled', sName)
+		if not TSMAUCTIONDB then
+			print("TSMAUCTIONDB VARIABLE IS MISSING, PLEASE ADD TradeSkillMaster/Core/Service/AuctionDB/Core.lua - LINE 42 (before MODULE FUNCTIONS): TSMAUCTIONDB = private.realmAppData")
+		end
+		oldValue = TSMAUCTIONDB.data[TSMAUCTIONDB.itemOffset['i:'..itemId] * TSMAUCTIONDB.numFields + TSMAUCTIONDB.fieldOffset.minBuyout]
+		newValue = private.latest[itemId]
+		if oldValue ~= newValue then
+			TSMAUCTIONDB.data[TSMAUCTIONDB.itemOffset['i:'..itemId] * TSMAUCTIONDB.numFields + TSMAUCTIONDB.fieldOffset.minBuyout] = private.latest[itemId]
+			print('DBMinBuyout change', sName, XioAuctions_Gold(newValue - oldValue))
+		end
+	elseif event == "ITEM_SEARCH_RESULTS_UPDATED" then
+	    -- nothing
 	else
 		print('Xioauctions - event', event, ...)
 	end
 end
 
 function XioAuctions_OnUpdate(self, elapsed)
-	--print("XioAuctions onUpdate", event)
+    -- nothing
 end
 
 
